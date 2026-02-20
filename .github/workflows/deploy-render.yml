@@ -20,18 +20,25 @@ jobs:
           extensions: pdo_mysql
 
       - name: Install backend dependencies
-        working-directory: backend
         run: |
           composer install --no-interaction --prefer-dist --optimize-autoloader
-          cp .env.example .env
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
 
       - name: Run backend tests
-        working-directory: backend
         run: php artisan test
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build frontend assets
+        run: npm run build
+
       - name: Build Docker backend
-        working-directory: backend
         run: docker build -t myapp-backend .
 
   deploy:
