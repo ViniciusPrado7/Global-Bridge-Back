@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: global_bridge_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: global_bridge
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: global_bridge
+      MYSQL_PASSWORD: global_bridge
+    ports:
+      - "4306:3306"
+    volumes:
+      - global_bridge_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    networks:
+      - global_bridge-network
+
+  backend:
+    build: .
+    container_name: global_bridge_app
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - global_bridge-network
+
+volumes:
+  global_bridge_data:
+
+networks:
+  global_bridge-network:
+    driver: bridge
