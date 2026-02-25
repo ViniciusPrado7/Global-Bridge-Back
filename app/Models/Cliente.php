@@ -8,7 +8,7 @@ class Cliente extends Model
 {
     protected$fillable = [
         'nome',
-        'taxa_UDST',
+        'taxa_USDT',
         'telefone',
         'grupo',
     ];

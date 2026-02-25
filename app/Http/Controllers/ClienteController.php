@@ -13,8 +13,11 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $cliente = cliente::all();
+        return response()->Json(
+            $cliente,200
+        );
+    }    
 
     /**
      * Show the form for creating a new resource.
@@ -26,8 +29,21 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+
+        
+           'nome' => 'required|string',
+           'taxa_USDT' => 'required|numeric',
+           'telefone' => 'required|string',
+           'grupo' => 'required|string',
+         ]);
+          $cliente = Cliente::create($validated);
+          return response()->json(
+            $cliente,201 
+          );
+
     }
+    
 
     
 
@@ -36,7 +52,17 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+    $validated = $request->validate([
+        'nome' => 'required|string',
+        'taxa_USDT' => 'required|numeric',
+        'telefone' => 'required|string',
+        'grupo' => 'required|string',
+    ]);
+
+     $cliente->update($validated);
+     return response()->json(
+        $cliente,200  
+     );
     }
 
     /**
@@ -44,6 +70,9 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return response()->json([
+            'message' => 'Cliente deletado com sucesso!'
+        ]);
     }
 }
