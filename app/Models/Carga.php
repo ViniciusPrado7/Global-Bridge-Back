@@ -7,20 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 class Carga extends Model
 {
     protected $fillable = [
-        'cliente',
-        'invoice',
+        'codigo',
+        'cliente_id',
+        'freteiro_id',
+        'status',
         'metodo_entrega',
-        'local_embarque',
-        'destino',
+        'pais_origem',
+        'pais_destino',
+        'moeda',
         'data_recebimento',
         'data_prevista_embarque',
         'volumes',
         'peso',
         'shipper_information',
+        'valor_total'
     ];
 
-      public function itens()
+    public function itens()
     {
         return $this->hasMany(CargaItem::class);
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function freteiro()
+    {
+        return $this->belongsTo(Freteiro::class);
     }
 }

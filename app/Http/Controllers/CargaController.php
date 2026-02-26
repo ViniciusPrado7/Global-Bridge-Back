@@ -3,36 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carga;
+use App\Services\Carga\CargaService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CargaController extends Controller
 {
+    public function __construct(
+        private CargaService $service
+    ) {
+    }
+
     public function index()
     {
         return response()->json(
-            Carga::with('itens')->latest()->get()
+            Carga::with(['cliente', 'freteiro', 'itens'])->get()
         );
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'cliente' => 'required|string',
-            'invoice' => 'required|string',
+            'codigo' => 'required|string|unique:cargas,codigo',
+            'cliente_id' => 'required|exists:clientes,id',
             'metodo_entrega' => 'required|string',
-            'local_embarque' => 'required|string',
-            'destino' => 'required|string',
+            'pais_origem' => 'required|string',
+            'pais_destino' => 'required|string',
             'data_recebimento' => 'required|date',
-            'data_prevista_embarque' => 'required|date',
-            'volumes' => 'required|integer',
-            'peso' => 'required|numeric',
+            'data_prevista_embarque' => 'required|date|after_or_equal:data_recebimento',
+            'peso' => 'required|numeric|min:0',
             'shipper_information' => 'nullable|string',
             'itens' => 'required|array|min:1',
         ]);
 
-        foreach ($request->itens as $item) {
-            Validator::make($item, [
+        foreach ($validated['itens'] as $item) {
+            validator($item, [
                 'descricao' => 'required|string',
                 'categoria' => 'required|string',
                 'quantidade' => 'required|integer|min:1',
@@ -40,37 +45,32 @@ class CargaController extends Controller
             ])->validate();
         }
 
-        $carga = Carga::create($validated);
+        $carga = $this->service->criar($validated);
 
-        foreach ($request->itens as $item) {
-            $carga->itens()->create($item);
-        }
-
-        return response()->json(
-            $carga->load('itens'),
-            201
-        );
-
+        return response()->json($carga, 201);
     }
 
     public function update(Request $request, Carga $carga)
     {
         $validated = $request->validate([
-            'cliente' => 'required|string',
-            'invoice' => 'required|string',
+            'codigo' => [
+                'required',
+                'string',
+                Rule::unique('cargas', 'codigo')->ignore($carga->id),
+            ],
+            'cliente_id' => 'required|exists:clientes,id',
             'metodo_entrega' => 'required|string',
-            'local_embarque' => 'required|string',
-            'destino' => 'required|string',
+            'pais_origem' => 'required|string',
+            'pais_destino' => 'required|string',
             'data_recebimento' => 'required|date',
-            'data_prevista_embarque' => 'required|date',
-            'volumes' => 'required|interger',
-            'peso' => 'required|numeric',
+            'data_prevista_embarque' => 'required|date|after_or_equal:data_recebimento',
+            'peso' => 'required|numeric|min:0',
             'shipper_information' => 'nullable|string',
             'itens' => 'required|array|min:1',
         ]);
 
-        foreach ($request->itens as $item) {
-            Validator::make($item, [
+        foreach ($validated['itens'] as $item) {
+            validator($item, [
                 'descricao' => 'required|string',
                 'categoria' => 'required|string',
                 'quantidade' => 'required|integer|min:1',
@@ -78,22 +78,15 @@ class CargaController extends Controller
             ])->validate();
         }
 
-        $carga->update($validated);
+        $cargaAtualizada = $this->service->atualizar($carga, $validated);
 
-        $carga->itens()->delete();
-
-        foreach ($request->itens as $item) {
-            $carga->itens()->create($item);
-        }
-
-        return response()->json(
-            $carga->load('itens')
-        );
+        return response()->json($cargaAtualizada);
     }
 
     public function destroy(Carga $carga)
     {
-        $carga->delete();
+        $this->service->deletar($carga);
+
         return response()->json([
             'message' => 'Carga deletada com sucesso!'
         ]);
