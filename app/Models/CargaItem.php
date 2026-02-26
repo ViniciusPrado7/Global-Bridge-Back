@@ -18,5 +18,4 @@ class CargaItem extends Model
     {
         return $this->belongsTo(Carga::class);
     }
-
 }
