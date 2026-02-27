@@ -37,4 +37,9 @@ class Carga extends Model
     {
         return $this->belongsTo(Freteiro::class);
     }
+    public function pagamentos()
+    {
+        return $this->hasMany(Pagamento::class);
+    }
 }
+
