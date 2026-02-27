@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Carga;
-// Importação obrigatória para resolver o erro "Class Controller not found"
-use App\Http\Controllers\Controller;
-// Importação do seu Service com o caminho correto
-use App\Services\Carga\Pagamento\PagamentoService;
+use App\Services\Pagamento\PagamentoService;
 
 class PagamentoController extends Controller
 {
-    /**
-     * Registra um novo pagamento para uma carga específica.
-     */
     public function store(Request $request, Carga $carga, PagamentoService $service)
     {
         $validated = $request->validate([
