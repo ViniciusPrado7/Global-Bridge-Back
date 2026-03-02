@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Carga\Pagamento;
+namespace App\Services\Pagamento;
 
 use App\Models\Carga;
 use App\Models\Pagamento;
@@ -14,19 +14,14 @@ class PagamentoService
 
     public function registrar(Carga $carga, array $dados)
     {
-        // Regra de negócio: Validar hash se for USDT
-        // Usando o Enum ou String para comparar
+       
         if ($dados['tipo_moeda'] === 'USDT' && empty($dados['usdt_hash'])) {
             throw new Exception("O hash é obrigatório para pagamentos em USDT.");
         }
-
-        // Limpar hash se for USD
         if ($dados['tipo_moeda'] === 'USD') {
             $dados['usdt_hash'] = null;
         }
 
-        // Cálculo do valor líquido (backend only)
-        // Usamos (float) para garantir que o PHP trate como número antes da divisão
         $valorLiquido = (float)$dados['valor'] / (float)$dados['taxa'];
 
         return DB::transaction(function () use ($carga, $dados, $valorLiquido) {
