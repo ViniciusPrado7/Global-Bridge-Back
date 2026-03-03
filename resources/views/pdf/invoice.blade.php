@@ -64,11 +64,11 @@
         <table width="100%" style="margin-bottom:30px; border-collapse: collapse;" >
             <tr>
                 <td width="40%" style="vertical-align:top; border: 1px solid white">
-                    <img src="{{ public_path('pdfImage/global-bridge.jpeg') }}" width="270" height="270">
+                    <img src="{{ public_path('pdfImage/global-bridge.jpeg') }}" width="200" height="200">
                 </td>
 
-                <td width="70%" style="text-align:right; vertical-align:top; border: 1px solid white">
-                    <div style="font-size:30px; font-weight:bold;">Shipping Invoice #{{$carga->codigo}}</div>
+                <td width="70%" style="text-align:right; vertical-align:top; border: 1px solid white;">
+                    <div style="font-size:32px; font-weight:bold; margin-top: 30px;">Shipping Invoice #{{$carga->codigo}}</div>
                     <div><strong>GLOBAL BRIDGE</strong></div>
                     <div>4290 South Highway 27</div>
                     <div>Clermont, FL 34711</div>
@@ -141,7 +141,7 @@
 
 
         <!-- TOTAL -->
-        <!-- <table class="no-border" style="margin-top:20px;">
+        <table class="no-border" style="margin-top:20px;">
             <tr>
                 <td class="right">
                     <strong>
@@ -149,6 +149,6 @@
                     </strong>
                 </td>
             </tr>
-        </table> -->
+        </table>
 </body>
 </html>
