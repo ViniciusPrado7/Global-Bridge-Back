@@ -12,8 +12,7 @@ class Freteiro extends Model
         'ship_to',
         'grupo',
         'telefone',
-        'taxa_MIA_PY',
-        'taxa_PY_SP',
+       
     ];
 
     public function cargas(){
