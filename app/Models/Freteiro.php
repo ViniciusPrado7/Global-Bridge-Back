@@ -20,7 +20,11 @@ class Freteiro extends Model
         return $this->hasMany(Carga::class);
     }
 
-   public function invoice(){
+    public function invoice(){
         return $this->hasMany(Freteiro::class);
+    }
+
+    public function categoria(){
+        return $this->hasMany(Categoria::class);
     }
 }
