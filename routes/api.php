@@ -9,6 +9,8 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmbarqueController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PagamentoController;
+use App\Http\Controllers\UserController;
+
 
 Route::apiResource('cargas/{carga}/pagamentos', PagamentoController::class);
 Route::apiResource('cargas', CargaController::class);
@@ -21,5 +23,6 @@ Route::apiResource('tasks', TaskController::class);
 Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('embarques', EmbarqueController::class);
 Route::apiResource('invoices', InvoiceController::class);
+Route::apiResource('user', UserController::class);
 
 
