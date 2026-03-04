@@ -50,6 +50,6 @@ class CategoriaController extends Controller
         $categoria->delete();
         return response()->json([
             'message' => 'Categoria deletada com sucesso!'
-        ]);;
+        ]);
     }
 }

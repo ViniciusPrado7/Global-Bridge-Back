@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CargaController;
 use App\Http\Controllers\CargaItemController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CategoriaFreteiroController;
 use App\Http\Controllers\FreteiroController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +23,8 @@ Route::apiResource('tasks', TaskController::class);
 Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('embarques', EmbarqueController::class);
 Route::apiResource('invoices', InvoiceController::class);
+Route::apiResource('categorias', CategoriaController::class);
+Route::apiResource('categoria_freteiros', CategoriaFreteiroController::class);
+
 
 
