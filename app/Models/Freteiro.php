@@ -15,4 +15,12 @@ class Freteiro extends Model
         'taxa_MIA_PY',
         'taxa_PY_SP',
     ];
+
+    public function cargas(){
+        return $this->hasMany(Carga::class);
+    }
+
+   public function invoice(){
+        return $this->hasMany(Freteiro::class);
+    }
 }

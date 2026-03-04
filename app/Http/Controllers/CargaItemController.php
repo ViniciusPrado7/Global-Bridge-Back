@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\CargaItem;
+use App\Services\Carga\CargaItemService;
 use Illuminate\Http\Request;
 
 class CargaItemController extends Controller
 {
+    public function __construct(
+        private CargaItemService $service
+    ) {}
+
     public function index()
     {
         return response()->json(
-            CargaItem::with('carga'->latest()->get())
+            CargaItem::with('carga')->latest()->get()
         );
     }
 
@@ -24,34 +29,28 @@ class CargaItemController extends Controller
             'valor_unitario' => 'required|numeric|min:0',
         ]);
 
-        $item = CargaItem::create($validated);
+        $item = $this->service->criar($validated);
 
-        return response()->json(
-            $item->load('carga'),
-            201
-        );
+        return response()->json($item, 201);
     }
 
     public function update(Request $request, CargaItem $cargaItem)
     {
-          $validated = $request->validate([
+        $validated = $request->validate([
             'descricao' => 'required|string',
             'categoria' => 'required|string',
             'quantidade' => 'required|integer|min:1',
             'valor_unitario' => 'required|numeric|min:0',
         ]);
 
-        $cargaItem->update($validated);
+        $itemAtualizado = $this->service->atualizar($cargaItem, $validated);
 
-        return response()->json(
-            $cargaItem->load('carga'),
-            200
-        );
+        return response()->json($itemAtualizado, 200);
     }
 
     public function destroy(CargaItem $cargaItem)
     {
-        $cargaItem->delete();
+        $this->service->deletar($cargaItem);
 
         return response()->json([
             'message' => 'Item removido com sucesso'

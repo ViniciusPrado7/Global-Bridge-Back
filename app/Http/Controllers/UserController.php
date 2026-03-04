@@ -2,57 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserName;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class UserNameController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        $usernames = UserName::all();
-        return response()->json($usernames, 200);
+        $user = User::all();
+        return response()->json($user, 200);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nome'=> 'required|string',
-            'email'=> 'required|email|unique:user_names,email',
+            'email'=> 'required|email|unique:users,email',
             'tipo_usuario' => 'required|in:admin,funcionario',
             'senha' => 'required|string|min:6',
             'data_nascimento' => 'required|date'
         ]);
 
-        
 
-        $user = UserName::create($validated);
+        $user = User::create($validated);
 
         return response()->json($user, 201);
     }
 
-    public function update(Request $request, UserName $userName)
+    public function update(Request $request, User $user)
 {
     $validated = $request->validate([
         'nome' => 'required|string',
         'email' => [
             'required',
             'email',
-            Rule::unique('user_names', 'email')->ignore($userName->id),
+            Rule::unique('users', 'email')->ignore($user->id),
         ],
         'tipo_usuario' => 'required|in:admin,funcionario',
         'senha' => 'nullable|string|min:6',
     ]);
 
-        $userName->update($validated);
+        $user->update($validated);
 
-        return response()->json($userName, 200);
+        return response()->json($user, 200);
     }
 
-    public function destroy(UserName $userName)
+    public function destroy(User $user)
     {
-        $userName->delete();
+        $user->delete();
 
         return response()->json([
             'message' => 'Usuário deletado com sucesso!'

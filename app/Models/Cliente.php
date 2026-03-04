@@ -8,8 +8,13 @@ class Cliente extends Model
 {
     protected$fillable = [
         'nome',
-        'taxa_UDST',
+        'taxa_USDT',
         'telefone',
         'grupo',
     ];
+
+    public function cargas()
+{
+    return $this->hasMany(Carga::class);
+}
 }
