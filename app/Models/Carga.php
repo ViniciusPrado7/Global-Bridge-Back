@@ -20,7 +20,6 @@ class Carga extends Model
         'volumes',
         'peso',
         'shipper_information',
-        'valor_total'
     ];
 
     public function itens()
