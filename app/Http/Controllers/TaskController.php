@@ -21,7 +21,7 @@ class TaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
+    */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -54,7 +54,7 @@ class TaskController extends Controller
             'data_conclusao' => 'required|date',
         ]);
 
-         $task->update($validated);
+        $task->update($validated);
 
         return response()->json(
             $task,200
