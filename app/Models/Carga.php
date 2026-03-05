@@ -20,8 +20,6 @@ class Carga extends Model
         'volumes',
         'peso',
         'shipper_information',
-        'valor_total',
-        'saldo_devedor' 
     ];
 
  
