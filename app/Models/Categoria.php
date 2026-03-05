@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categoria extends Model
 {
-    protected $fillabel =[
+    protected $fillable =[
         'MI-PY',
         'PY-SP'
     ];
 
-    public function freteiro(){
-        return $this->hasMany(Freteiro::class);
+    public function categoria_freteiro(){
+        return $this->hasMany(Categoria_Freteiro::class);
     }
 }
