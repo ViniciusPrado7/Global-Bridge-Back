@@ -48,4 +48,13 @@ class Carga extends Model
     {
         return $this->hasMany(Pagamento::class);
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function warehouse(){
+        return $this->hasMany(Warehouse::class);
+    }
+}
+
+>>>>>>> main

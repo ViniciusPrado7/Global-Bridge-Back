@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Freteiro extends Model
 {
-     protected$fillable = [
+     protected $fillable = [
         'nome',
         'bill_to',
         'ship_to',
@@ -24,6 +24,6 @@ class Freteiro extends Model
     }
 
     public function categoria_freteiro(){
-        return $this->hasMany(Categoria_Freteiro::class);
+        return $this->hasMany(CategoriaFreteiro::class);
     }
 }
