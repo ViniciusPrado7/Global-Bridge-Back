@@ -22,6 +22,13 @@ class Carga extends Model
         'shipper_information',
     ];
 
+ 
+    protected $casts = [
+        'saldo_devedor' => 'decimal:2',
+        'valor_total'   => 'decimal:2',
+        'peso'          => 'float',
+    ];
+
     public function itens()
     {
         return $this->hasMany(CargaItem::class);
@@ -36,11 +43,11 @@ class Carga extends Model
     {
         return $this->belongsTo(Freteiro::class);
     }
+
     public function pagamentos()
     {
         return $this->hasMany(Pagamento::class);
     }
-
     public function warehouse(){
         return $this->hasMany(Warehouse::class);
     }

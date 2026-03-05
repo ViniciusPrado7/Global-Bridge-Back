@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('freteiros', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome');
-            $table->string('bill_to');
-            $table->string('ship_to');
-            $table->string('grupo');
-            $table->string('telefone');
-            $table->timestamps();
+        Schema::table('cargas', function (Blueprint $table) {
+        $table->decimal( 'saldo_devedor',15,2)   
+       ->default(0)
+       ->after('valor_total');
         });
+
     }
 
     /**
@@ -27,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('freteiros');
+        Schema::table('cargas',function(Blueprint $table){
+$table->dropColumn('saldo_devedor');
+        });
     }
 };

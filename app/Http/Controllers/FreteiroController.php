@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class FreteiroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
         $freteiros = Freteiro::all();
@@ -18,9 +16,7 @@ class FreteiroController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -29,8 +25,6 @@ class FreteiroController extends Controller
             'ship_to' => 'required|string',
             'grupo' => 'required|string',
             'telefone' => 'required|string',
-            'taxa_MIA_PY' => 'required|numeric',
-            'taxa_PY_SP' => 'required|numeric',
         ]);
 
         $freteiro = Freteiro::create($validated);
@@ -40,9 +34,7 @@ class FreteiroController extends Controller
             );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, Freteiro $freteiro)
     {
         $validated = $request->validate([
