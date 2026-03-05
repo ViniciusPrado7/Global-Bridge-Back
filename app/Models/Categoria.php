@@ -12,6 +12,6 @@ class Categoria extends Model
     ];
 
     public function categoria_freteiro(){
-        return $this->hasMany(Categoria_Freteiro::class);
+        return $this->hasMany(CategoriaFreteiro::class);
     }
 }

@@ -14,11 +14,11 @@ return new class extends Migration
             $table->foreignId('id_categoria')->constrained('categorias')->cascadeOnDelete();
             $table->foreignId('id_freteiro')->constrained('freteiros')
             ->cascadeOnDelete();
-            $table->decimal('taxa', 4, 3)->nullable();
+            $table->decimal('taxa', 9, 3)->nullable();
             $table->string('moeda');
-            $table->decimal('taxa_kg', 4, 3)->nullable();
-            $table->decimal('taxa_usd', 4, 3)->nullable();
-            $table->decimal('taxa_unidade', 4, 3)->nullable();
+            $table->decimal('taxa_kg', 9, 3)->nullable();
+            $table->decimal('taxa_usd', 9, 3)->nullable();
+            $table->decimal('taxa_unidade', 9, 3)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('categoria__freteiros');
+        Schema::dropIfExists('categoria_freteiros');
     }
 };

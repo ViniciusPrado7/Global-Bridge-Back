@@ -12,7 +12,7 @@ use App\Http\Controllers\EmbarqueController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\WarehouseController;
 
 Route::apiResource('cargas/{carga}/pagamentos', PagamentoController::class);
 Route::apiResource('cargas', CargaController::class);
@@ -25,6 +25,7 @@ Route::apiResource('tasks', TaskController::class);
 Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('embarques', EmbarqueController::class);
 Route::apiResource('invoices', InvoiceController::class);
+Route::apiResource('warehouses', WarehouseController::class);
 Route::apiResource('categorias', CategoriaController::class);
 Route::apiResource('categoria_freteiros', CategoriaFreteiroController::class);
 Route::apiResource('user', UserController::class);
