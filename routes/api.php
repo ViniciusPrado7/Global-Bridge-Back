@@ -10,6 +10,7 @@ use App\Http\Controllers\EmbarqueController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MiaController;
 
 
 Route::apiResource('cargas/{carga}/pagamentos', PagamentoController::class);
@@ -24,5 +25,7 @@ Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('embarques', EmbarqueController::class);
 Route::apiResource('invoices', InvoiceController::class);
 Route::apiResource('user', UserController::class);
+Route::apiResource('mia', MiaController::class)
+    ->parameters(['mia' => 'mia']);
 
 
