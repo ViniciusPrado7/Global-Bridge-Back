@@ -23,7 +23,7 @@ class PagamentoService
             }
 
             $valorOriginal = (float) $dados['valor'];
-            $taxa = (float) ($dados['taxa'] ?? 0); // Se não vier taxa, assume 0%
+            $taxa = (float) ($dados['taxa'] ?? 0);
 
             $valorDesconto = $valorOriginal * ($taxa / 100);
             $valorLiquido = $valorOriginal - $valorDesconto;
@@ -37,17 +37,16 @@ class PagamentoService
             }
 
             $novoSaldo = (float) $carga->saldo_devedor - $valorLiquido;
-            
-            $carga->update([
-                'saldo_devedor' => $novoSaldo
-            ]);
 
-            // 7. 💰 Registro do histórico de pagamento
+           
+            $carga->saldo_devedor = $novoSaldo;
+            $carga->save();
+
             return $carga->pagamentos()->create([
                 'tipo_moeda'    => $dados['tipo_moeda'],
                 'valor'         => $valorOriginal,
-                'taxa'          => $taxa, // Aqui salva a porcentagem (ex: 5.00)
-                'valor_liquido' => $valorLiquido, // Aqui salva o valor com o desconto aplicado
+                'taxa'          => $taxa,
+                'valor_liquido' => $valorLiquido,
                 'usdt_hash'     => $dados['usdt_hash'] ?? null,
                 'observacoes'   => $dados['observacoes'] ?? null,
             ]);
