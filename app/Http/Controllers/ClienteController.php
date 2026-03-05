@@ -21,8 +21,6 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-
-
             'nome' => 'required|string',
             'taxa_USDT' => 'required|numeric',
             'telefone' => 'required|string',
