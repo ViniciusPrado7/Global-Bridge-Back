@@ -26,7 +26,7 @@ class CargaController extends Controller
         $validated = $request->validate([
             'codigo' => 'required|string|unique:cargas,codigo',
             'cliente_id' => 'required|exists:clientes,id',
-            'freteiro_id' => 'required|exists:freteiros,id',
+            'freteiro_id' => 'nullable|exists:freteiros,id',
             'metodo_entrega' => 'required|string',
             'pais_origem' => 'required|string',
             'pais_destino' => 'required|string',
@@ -60,6 +60,7 @@ class CargaController extends Controller
                 Rule::unique('cargas', 'codigo')->ignore($carga->id),
             ],
             'cliente_id' => 'required|exists:clientes,id',
+            'freteiro_id' => 'nullable|exists:freteiros,id', // ✅ ALTERADO AQUI TAMBÉM
             'metodo_entrega' => 'required|string',
             'pais_origem' => 'required|string',
             'pais_destino' => 'required|string',

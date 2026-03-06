@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CargaItem extends Model
+class Warehouse extends Model
 {
     protected $fillable = [
         'carga_id',
-        'descricao',
-        'categoria',
-        'quantidade',
-        'valor_unitario',
+        'codigo',
+        'data_emissao',
+        'pdf_path'
     ];
 
-    public function carga()
-    {
+    public function carga(){
         return $this->belongsTo(Carga::class);
     }
 }
