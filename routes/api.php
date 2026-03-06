@@ -13,6 +13,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MiaController;
+use App\Http\Controllers\PyController;
 use App\Http\Controllers\WarehouseController;
 
 
@@ -33,5 +34,5 @@ Route::apiResource('categoria_freteiros', CategoriaFreteiroController::class);
 Route::apiResource('user', UserController::class);
 Route::apiResource('mia', MiaController::class)
     ->parameters(['mia' => 'mia']);
-
-
+Route::apiResource('py', PyController::class)
+    ->parameters(['py' => 'py']);
